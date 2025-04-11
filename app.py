@@ -77,7 +77,7 @@ with col2:
         default_detected_image = PIL.Image.open(
             default_detected_image_path)
         st.image(default_detected_image_path, caption='Detected Image',
-                    use_container_width=True)
+                    use_column_width=True)
     else:
         if st.sidebar.button('Detect Objects'):
             res = model.predict(uploaded_image,
@@ -86,7 +86,7 @@ with col2:
             boxes = res[0].boxes
             res_plotted = res[0].plot()[:, :, ::-1]
             st.image(res_plotted, caption='Detected Image',
-                        use_container_width=True)
+                        use_column_width=True)
             try:
                 with st.expander("Detection Results"):
                     for box in boxes:
