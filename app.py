@@ -9,6 +9,10 @@ import streamlit as st
 import settings
 import model_utils
 
+import os
+os.environ['PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION'] = 'python'
+
+
 # Setting page layout
 st.set_page_config(
     page_title="Object Detection using YOLOv8",

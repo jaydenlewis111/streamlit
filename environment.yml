@@ -1,0 +1,14 @@
+name: yolo-app
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch=2.1.0
+  - torchvision=0.16.0
+  - pip
+  - pip:
+    - streamlit==1.31.0
+    - ultralytics==8.1.0
+    - pillow==10.2.0

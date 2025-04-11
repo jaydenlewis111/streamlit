@@ -1,21 +1,40 @@
 from ultralytics import YOLO
 import streamlit as st
-import settings
-
+import torch
+from pathlib import Path
 
 def load_model(model_path):
     """
     Loads a YOLO object detection model from the specified model_path.
-
-    Parameters:
-        model_path (str): The path to the YOLO model file.
-
-    Returns:
-        A YOLO object detection model.
     """
-    model = YOLO(model_path)
-    return model
-
+    try:
+        if not isinstance(model_path, (str, Path)):
+            raise ValueError("model_path must be a string or Path object")
+            
+        model_path = str(model_path)  # Convert Path to string
+        
+        # Download the model if it doesn't exist locally
+        if not Path(model_path).exists():
+            st.info(f"Downloading model {Path(model_path).name}...")
+            try:
+                model = YOLO(model_path)  # This will auto-download from ultralytics
+                st.success("Model downloaded successfully!")
+                return model
+            except Exception as e:
+                st.error(f"Error downloading model: {str(e)}")
+                return None
+        
+        # Load existing model
+        try:
+            model = YOLO(model_path)
+            return model
+        except Exception as e:
+            st.error(f"Error loading local model: {str(e)}")
+            return None
+            
+    except Exception as e:
+        st.error(f"Error in load_model: {str(e)}")
+        return None
 
 def display_tracker_options():
     display_tracker = st.radio("Display Tracker", ('Yes', 'No'))
